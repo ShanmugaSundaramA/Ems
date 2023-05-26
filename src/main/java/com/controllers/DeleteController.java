@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class AddDetailController {
+public class DeleteController {
 
-	@RequestMapping("/add")
-	public String addDetails() {
-		return "Add";
+	@RequestMapping("/delete")
+	public String viewDetails() {
+		return "Delete";
 	}
-
+	
 }
