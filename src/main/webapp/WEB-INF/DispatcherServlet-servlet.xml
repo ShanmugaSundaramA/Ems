@@ -19,10 +19,4 @@
 		<property name="order" value="0" />
 	</bean>
 
-	<bean id="viewResolver1"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/entry/"></property>
-		<property name="suffix" value=".jsp"></property>
-		<property name="order" value="1" />
-	</bean>
 </beans>
