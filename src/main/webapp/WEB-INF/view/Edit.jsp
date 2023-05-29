@@ -25,6 +25,9 @@
 	<div class="updateFormTag" align="center">
 		<form action="/EMS/editDetails">
 			<table>
+			    <tr>
+					<td><input type="hidden" id="employeeId" name="employeeId" value="${employeeId}"></td>
+				</tr>
 				<tr>
 					<td><label for="employeeName">Employee Name</label></td>
 					<td><input type="text" id="employeeName" name="employeeName" value="${employeeName}"></td>
@@ -54,7 +57,7 @@
 					<td><input type="email" id="employeeEmail" name="employeeEmail" value="${employeeEmail}"></td>
 				</tr>
 			</table>
-			<input type="submit" value="Submit">
+			<input type="submit" value="Edit">
 		</form>
 	</div>
 </body>

@@ -4,15 +4,12 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.model.EmployeeDTO;
 import com.model.EmployeeVO;
 import com.service.EmployeeService;
@@ -40,7 +37,7 @@ public class EditController {
 		int id = Integer.parseInt(resquest.getParameter("employeeId"));
 		System.out.println(id);
 		try {
-			employeeDTO = employeeService.getDetailforEdit(id);
+			employeeDTO = employeeService.getDetails(id);
 			if(employeeDTO!=null) {
 				model.addAttribute("responseToUser","Please Modify Your Data");
 				model.addAttribute("employeeId", employeeDTO.getEmpId());
@@ -49,17 +46,15 @@ public class EditController {
 				model.addAttribute("employeeGender", employeeDTO.getEmpGender());
 				model.addAttribute("employeeDesignation", employeeDTO.getEmpDesignation());
 				model.addAttribute("employeeSalary", employeeDTO.getEmpSalary());
-				model.addAttribute("employeeEmail", employeeDTO.getEmpEmail());
-				return "Edit";		
+				model.addAttribute("employeeEmail", employeeDTO.getEmpEmail());	
 			}else {
 				model.addAttribute("responseToUser", "Data does not exist");
-				return "Edit";
 			}
 		} catch (SQLException e) {
 			System.out.println(e);
-		   model.addAttribute("responseToUser","Server Connection Down.");
-		   return "Edit";  
+		    model.addAttribute("responseToUser","Server Connection Down.");  
 		}
+		return "Edit";
 	}
 	
 	
@@ -92,21 +87,18 @@ public class EditController {
 		employeeVo.setEmpEmail(email);
 
 		try {
-			int result = employeeService.saveEmployee(employeeVo);
+			int result = employeeService.modifyEmployee(employeeVo);
 			if (result == 1) {
-				model.addAttribute("responseToUser","");
-				return "";
+				model.addAttribute("responseToUser","Edited Successfully.");
 			} else {
 				model.addAttribute("responseToUser", "Database Connection Down.Try Again");
 				System.out.println("failed");
-				return "";
 			}
 		} catch (SQLException e) {
 			model.addAttribute("responseToUser", "Failed to Edited. Try Again.");
 			System.out.println("connection failed");
-			// System.out.println(e);
-			return "";
 		}
+		return "Edit";
 	}
 
 }

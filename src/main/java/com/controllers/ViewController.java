@@ -8,6 +8,7 @@ public class ViewController {
 
 	@RequestMapping("/view")
 	public String viewDetails() {
+		
 		return "View";
 	}
 }

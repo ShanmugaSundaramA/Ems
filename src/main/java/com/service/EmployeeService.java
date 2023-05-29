@@ -36,8 +36,24 @@ public class EmployeeService {
 		
 	}
 
-	public EmployeeDTO getDetailforEdit(int empid) throws SQLException {
-		return employeeDAO.getDetailsForModify(empid);
+	public EmployeeDTO getDetails(int empid) throws SQLException {
+		return employeeDAO.getDetailsForModifyAndDelete(empid);
+	}
+
+	public int modifyEmployee(EmployeeVO employeeVo) throws SQLException {
+		employeeBO.setEmpId(employeeVo.getEmpId());
+		employeeBO.setEmpName(employeeVo.getEmpName());
+		employeeBO.setEmpDOB(employeeVo.getEmpDOB());
+		employeeBO.setEmpAge(employeeVo.getEmpAge());
+		employeeBO.setEmpGender(employeeVo.getEmpGender());
+		employeeBO.setEmpDesignation(employeeVo.getEmpDesignation());
+		employeeBO.setEmpSalary(employeeVo.getEmpSalary());
+		employeeBO.setEmpEmail(employeeVo.getEmpEmail());
+		return employeeDAO.updateEmpDetails(employeeBO);
+	}
+
+	public int removeEmployee(int empid) throws SQLException {
+		return employeeDAO.deleteEmpDetails(empid);
 	}
 
 }
