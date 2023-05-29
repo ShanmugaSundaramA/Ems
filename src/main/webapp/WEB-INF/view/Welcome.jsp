@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>View Page</title>
+<title>Welcome Page</title>
 </head>
 <body>
-	<%@include file="../utils/Header.html"%>
+   	<%@include file="/WEB-INF/utils/Header.html"%> 
 </body>
 </html>

@@ -1,1 +1,16 @@
 @charset "ISO-8859-1";
+
+h2 {
+	font-size: 25px;
+}
+
+a {
+	display: block;
+	text-decoration: none;
+	float: left;
+	padding: 1%  6.98%;
+}
+
+input {
+	float: right;
+}
