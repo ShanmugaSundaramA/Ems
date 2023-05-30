@@ -59,18 +59,18 @@ public class EditController {
 	
 	
 	@RequestMapping("/editDetails")
-	public String editDetails(HttpServletRequest resquest, Model model) {
+	public String editDetails(HttpServletRequest request, Model model) {
 
-		int id = Integer.parseInt(resquest.getParameter("employeeId"));
-		String name = resquest.getParameter("employeeName");
-		Date dob = Date.valueOf(resquest.getParameter("employeeDOB"));
-		LocalDate dobLocal = LocalDate.parse(resquest.getParameter("employeeDOB"));
+		int id = Integer.parseInt(request.getParameter("employeeId"));
+		String name = request.getParameter("employeeName");
+		Date dob = Date.valueOf(request.getParameter("employeeDOB"));
+		LocalDate dobLocal = LocalDate.parse(request.getParameter("employeeDOB"));
 		LocalDate curDate = LocalDate.now();
 		int age = Period.between(dobLocal, curDate).getYears();
-		String gender = resquest.getParameter("employeeGender");
-		String designation = resquest.getParameter("employeeDesignation");
-		int salary = Integer.parseInt(resquest.getParameter("employeeSalary"));
-		String email = resquest.getParameter("employeeEmail");
+		String gender = request.getParameter("employeeGender");
+		String designation = request.getParameter("employeeDesignation");
+		int salary = Integer.parseInt(request.getParameter("employeeSalary"));
+		String email = request.getParameter("employeeEmail");
 
 		/*
 		 * System.out.println(id + " " + name + " " + dob + " "+age+" "+ gender + " " +

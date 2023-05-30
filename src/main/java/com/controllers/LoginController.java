@@ -13,6 +13,11 @@ public class LoginController {
 		return "Login";
 	}
 	
+	@RequestMapping("/Test")
+	public String test() {
+		return "Test";
+	}
+	
 	@RequestMapping("/loginDataCheck")
 	public String loginDataCheck(HttpServletRequest request) {
 		String userName=request.getParameter("userName");
