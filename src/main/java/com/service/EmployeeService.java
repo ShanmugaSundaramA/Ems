@@ -21,9 +21,9 @@ public class EmployeeService {
 	@Autowired
 	@Qualifier("employeeDAO")
 	EmployeeDAO employeeDAO;
-	
+
 	public int saveEmployee(EmployeeVO employeeVo) throws SQLException {
-		
+
 		employeeBO.setEmpId(employeeVo.getEmpId());
 		employeeBO.setEmpName(employeeVo.getEmpName());
 		employeeBO.setEmpDOB(employeeVo.getEmpDOB());
@@ -34,7 +34,7 @@ public class EmployeeService {
 		employeeBO.setEmpEmail(employeeVo.getEmpEmail());
 
 		return employeeDAO.insertEmpDetails(employeeBO);
-		
+
 	}
 
 	public EmployeeDTO getDetails(int empid) throws SQLException {
@@ -56,23 +56,9 @@ public class EmployeeService {
 	public int removeEmployee(int empid) throws SQLException {
 		return employeeDAO.deleteEmpDetails(empid);
 	}
-	
-	public List<EmployeeDTO> showDetails(EmployeeVO employeeVo,String field,int orderValue,int pageNo,int viewCount) throws SQLException {
-		String order;
-		switch (orderValue) {
-		case 1:
-			order="desc";
-			orderValue=orderValue+1;
-			break;
-		case 2:
-			order="asc";
-			orderValue=orderValue-1;
-			break;	
-		default:
-			order="asc";
-			orderValue=orderValue-2;
-			break;
-		}
+
+	public List<EmployeeDTO> showDetails(EmployeeVO employeeVo, String field, String order, int pageNo, int viewCount)
+			throws SQLException {
 		
 		employeeBO.setEmpId(employeeVo.getEmpId());
 		employeeBO.setEmpName(employeeVo.getEmpName());
@@ -82,9 +68,9 @@ public class EmployeeService {
 		employeeBO.setEmpDesignation(employeeVo.getEmpDesignation());
 		employeeBO.setEmpSalary(employeeVo.getEmpSalary());
 		employeeBO.setEmpEmail(employeeVo.getEmpEmail());
-		
+
 		return employeeDAO.selectEmpDetails(employeeBO, field, order, pageNo, viewCount);
-		
+
 	}
 
 }

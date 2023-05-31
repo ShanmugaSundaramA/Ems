@@ -8,7 +8,7 @@
 <script type="text/javascript">
 function Demo() {
 	
-	alert(document.getElementById("id").value);
+	alert(document.getElementById("id"+1).value);
 	window.location.href='/EMS/add';
 }
 </script>
@@ -16,7 +16,7 @@ function Demo() {
 <body>
 <table>
 <tr>
-<th onclick="Demo()"><input type="hidden" value=1 id="id" name="id">hiii</th>
+<th onclick="Demo()"><input type="hidden" value=1 id="id1" name="id">hiii</th>
 </tr>
 </table>
 </body>

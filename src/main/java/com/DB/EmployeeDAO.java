@@ -26,7 +26,7 @@ public class EmployeeDAO {
 	private final String selectQueryById = "select * from Employee where id=?";
 	private final String updateQuery = "update Employee set name=?,dob=?,age=?,gender=?,designation=?,salary=?,email=? where id=? ";
 	private final String deleteQuery="delete from Employee where id=?";
-	private String selectQuery="select * from Employee";
+	//private String selectQuery="select * from Employee";
 	
 	static Connection connection = null;
 
@@ -106,7 +106,6 @@ public class EmployeeDAO {
 		String defaultId = employeeBO.getEmpId() == 0 ? "" : Integer.toString(employeeBO.getEmpId());
 		String defaultName =employeeBO.getEmpName() == null ? "" : employeeBO.getEmpName();
 		SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("yyyyMMdd");
-		
 		String date_to_string = employeeBO.getEmpDOB()==null ? null : dateformatyyyyMMdd.format(employeeBO.getEmpDOB());
 		String defaultDate =  date_to_string  == null ? "" :  date_to_string ;
 		String defaultGender = employeeBO.getEmpGender() == null ? "" : employeeBO.getEmpGender();
@@ -114,22 +113,23 @@ public class EmployeeDAO {
 		String defaultDesignation = employeeBO.getEmpDesignation() == null ? "" : employeeBO.getEmpDesignation(); 
 		String defaultEmail = employeeBO.getEmpEmail() == null ? "" : employeeBO.getEmpEmail();
 		
-		selectQuery=selectQuery+" where id like '"+defaultId+"%' and name like '"+defaultName+
+		String selectQuery="select * from Employee where id like '"+defaultId+"%' and name like '"+defaultName+
 				"%' and DOB like '"+defaultDate+"%' and gender like '"+defaultGender+
 				"%' and designation like '"+defaultDesignation+"%' and salary like '"+defaultSalary+
 				"%' and email like '"+defaultEmail+"%' order by "+field+" "+order+" limit "+startingLimit+","+endingLimit;
-        System.out.println(selectQuery); 
+        //System.out.println(selectQuery); 
         Statement smt=connection.createStatement();
         ResultSet rs=smt.executeQuery(selectQuery);
-        if (rs.next()) {
-			employeeDTO.setEmpId(rs.getInt(1));
-			employeeDTO.setEmpName(rs.getString(2));
-			employeeDTO.setEmpDOB(rs.getDate(3));
-			employeeDTO.setEmpGender(rs.getString(5));
-			employeeDTO.setEmpDesignation(rs.getString(6));
-			employeeDTO.setEmpSalary(rs.getInt(7));
-			employeeDTO.setEmpEmail(rs.getString(8));
-			empList.add(employeeDTO);
+        while (rs.next()) {
+        	EmployeeDTO employeeDTOList=new EmployeeDTO();
+			employeeDTOList.setEmpId(rs.getInt(1));
+			employeeDTOList.setEmpName(rs.getString(2));
+			employeeDTOList.setEmpDOB(rs.getDate(3));
+			employeeDTOList.setEmpGender(rs.getString(5));
+			employeeDTOList.setEmpDesignation(rs.getString(6));
+			employeeDTOList.setEmpSalary(rs.getInt(7));
+			employeeDTOList.setEmpEmail(rs.getString(8));
+			empList.add(employeeDTOList);
 		}
 		return empList; 
 	}
