@@ -9,7 +9,7 @@ public class DBConnection {
 	static final String driver = "com.mysql.cj.jdbc.Driver";
 	static final String url = "jdbc:mysql://localhost:3306/sundar";
 	static final String userName = "root";
-	static final String password = "@sundar@0129#";
+	static final String password = "Sundar0129Sowmiya";
 	static Connection connection;
 
 	public static Connection dbconnectionStart() throws ClassNotFoundException, SQLException {

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,18 +102,22 @@ public class EmployeeDAO {
 		List<EmployeeDTO> empList=new ArrayList<EmployeeDTO>();
 		int startingLimit=((pageNo-1)*viewCount);
 		int endingLimit=viewCount;
-		String defaultId;
-		String defaultSalary=Integer.toString(employeeBO.getEmpSalary());
-		if(employeeBO.getEmpId()==0) {
-			 defaultId="";
-		}else {
-			 defaultId=Integer.toString(employeeBO.getEmpId());
-		}
 		
-		selectQuery=selectQuery+" where id like '"+defaultId+"%' and name like '"+employeeBO.getEmpName()+
-				"%' and DOB like '"+employeeBO.getEmpDOB()+"%' and gender like '"+employeeBO.getEmpGender()+
-				"%' and designation like '"+employeeBO.getEmpDesignation()+"%' and salary like '"+defaultSalary+
-				"%' and email like '"+employeeBO.getEmpEmail()+"%' order by "+field+" "+order+" limit "+startingLimit+","+endingLimit;
+		String defaultId = employeeBO.getEmpId() == 0 ? "" : Integer.toString(employeeBO.getEmpId());
+		String defaultName =employeeBO.getEmpName() == null ? "" : employeeBO.getEmpName();
+		SimpleDateFormat dateformatyyyyMMdd = new SimpleDateFormat("yyyyMMdd");
+		
+		String date_to_string = employeeBO.getEmpDOB()==null ? null : dateformatyyyyMMdd.format(employeeBO.getEmpDOB());
+		String defaultDate =  date_to_string  == null ? "" :  date_to_string ;
+		String defaultGender = employeeBO.getEmpGender() == null ? "" : employeeBO.getEmpGender();
+		String defaultSalary = employeeBO.getEmpSalary() == 0 ? "" : Integer.toString(employeeBO.getEmpSalary());
+		String defaultDesignation = employeeBO.getEmpDesignation() == null ? "" : employeeBO.getEmpDesignation(); 
+		String defaultEmail = employeeBO.getEmpEmail() == null ? "" : employeeBO.getEmpEmail();
+		
+		selectQuery=selectQuery+" where id like '"+defaultId+"%' and name like '"+defaultName+
+				"%' and DOB like '"+defaultDate+"%' and gender like '"+defaultGender+
+				"%' and designation like '"+defaultDesignation+"%' and salary like '"+defaultSalary+
+				"%' and email like '"+defaultEmail+"%' order by "+field+" "+order+" limit "+startingLimit+","+endingLimit;
         System.out.println(selectQuery); 
         Statement smt=connection.createStatement();
         ResultSet rs=smt.executeQuery(selectQuery);
