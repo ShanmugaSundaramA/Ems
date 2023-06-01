@@ -14,6 +14,8 @@ public class EmployeeDTO {
 	private String empDesignation;
 	private int empSalary;
 	private String empEmail;
+	private int existingRecordCount;
+	private int totalRecordCount;
 
 	public int getEmpId() {
 		return empId;
@@ -77,6 +79,22 @@ public class EmployeeDTO {
 
 	public void setEmpEmail(String empEmail) {
 		this.empEmail = empEmail;
+	}
+
+	public int getExistingRecordCount() {
+		return existingRecordCount;
+	}
+
+	public void setExistingRecordCount(int existingRecordCount) {
+		this.existingRecordCount = existingRecordCount;
+	}
+
+	public int getTotalRecordCount() {
+		return totalRecordCount;
+	}
+
+	public void setTotalRecordCount(int totalRecordCount) {
+		this.totalRecordCount = totalRecordCount;
 	}
 
 }

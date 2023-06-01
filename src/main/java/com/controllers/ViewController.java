@@ -51,24 +51,27 @@ public class ViewController {
 		}
 		model.addAttribute("orderValue"+no,orderValue);
 		
-		int pageNo = 1;
-		int viewCount = 15;
+		int pageNo =  resquest.getParameter("pageNo") == null || resquest.getParameter("pageNo") == "" ? 1 : Integer.parseInt(resquest.getParameter("pageNo")) ;
+		int viewCount = resquest.getParameter("viewCount") == null || resquest.getParameter("viewCount") == "" ? 15 : Integer.parseInt(resquest.getParameter("viewCount")) ;
 		
-		int id = resquest.getParameter("employeeid") == null ||  resquest.getParameter("employeeid") ==  "" ? 0 : Integer.parseInt(resquest.getParameter("employeeid")) ;
-		String name = resquest.getParameter("employeename");
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("viewCount",viewCount);
+		
+		int id = resquest.getParameter("employeeId") == null ||  resquest.getParameter("employeeId") ==  "" ? 0 : Integer.parseInt(resquest.getParameter("employeeId")) ;
+		String name = resquest.getParameter("employeeName");
 		Date dob = resquest.getParameter("employeeDOB") == null || resquest.getParameter("employeeDOB") == ""? null : Date.valueOf(resquest.getParameter("employeeDOB"));
-		String gender = resquest.getParameter("employeegender");
-		String designation = resquest.getParameter("employeedesignation");
-		int salary =resquest.getParameter("employeesalary") == null || resquest.getParameter("employeesalary") == "" ? 0 : Integer.parseInt(resquest.getParameter("employeesalary"));
-		String email = resquest.getParameter("employeeemail");
-		
-		model.addAttribute("searchFieldValue"+no,id);
-		model.addAttribute("searchFieldValue"+no,name);
-		model.addAttribute("searchFieldValue"+no,dob);
-		model.addAttribute("searchFieldValue"+no,gender);
-		model.addAttribute("searchFieldValue"+no,designation);
-		model.addAttribute("searchFieldValue"+no,salary);
-		model.addAttribute("searchFieldValue"+no,email);
+		String gender = resquest.getParameter("employeeGender");
+		String designation = resquest.getParameter("employeeDesignation");
+		int salary =resquest.getParameter("employeeSalary") == null || resquest.getParameter("employeeSalary") == "" ? 0 : Integer.parseInt(resquest.getParameter("employeeSalary"));
+		String email = resquest.getParameter("employeeEmail");
+	
+		model.addAttribute("searchId",resquest.getParameter("employeeId"));
+		model.addAttribute("searchName",name);
+		model.addAttribute("searchDOB",dob);
+		model.addAttribute("searchGender",gender);
+		model.addAttribute("searchDesignation",designation);
+		model.addAttribute("searchSalary",resquest.getParameter("employeeSalary"));
+		model.addAttribute("searchEmail",email);
 		
 		employeeVo.setEmpId(id);
 		employeeVo.setEmpName(name);
@@ -80,23 +83,25 @@ public class ViewController {
 
 		try {
 			List<EmployeeDTO> empList = employeeService.showDetails(employeeVo, field, order, pageNo, viewCount);
+			employeeDTO= employeeService.getCounts(employeeVo);
 			/*
-			 * if(empList.isEmpty()) { System.out.println("NoData"); }else { for
-			 * (EmployeeDTO employeeDTO : empList) {
-			 * 
-			 * System.out.println(employeeDTO.getEmpId());
-			 * System.out.println(employeeDTO.getEmpName());
-			 * System.out.println(employeeDTO.getEmpDOB());
-			 * System.out.println(employeeDTO.getEmpGender());
-			 * System.out.println(employeeDTO.getEmpDesignation());
-			 * System.out.println(employeeDTO.getEmpSalary());
-			 * System.out.println(employeeDTO.getEmpEmail());
-			 * 
-			 * } }
+			 * if(empList.isEmpty()) { System.out.println("NoData"); }else { 
+			 * }
 			 */
+			 int existingRecordCount=employeeDTO.getExistingRecordCount();
+			 //System.out.println(existingRecordCount);
+			 int pages=Math.round(existingRecordCount/viewCount);
+			 //System.out.println(pages);
+			 pages=existingRecordCount%viewCount != 0 ? pages+1 : pages ;
+			 //System.out.println(pages);
+			 int totalRecord=employeeDTO.getTotalRecordCount();
+			 
+			model.addAttribute("pageCount",pages);
+			model.addAttribute("TotalRecords",totalRecord);
 			model.addAttribute("empList", empList);
+			
 		} catch (SQLException e) {
-
+             System.out.println(e);
 		}
 
 		return "View";

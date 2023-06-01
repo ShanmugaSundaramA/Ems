@@ -73,4 +73,18 @@ public class EmployeeService {
 
 	}
 
+	public EmployeeDTO getCounts(EmployeeVO employeeVo)throws SQLException {
+		
+		employeeBO.setEmpId(employeeVo.getEmpId());
+		employeeBO.setEmpName(employeeVo.getEmpName());
+		employeeBO.setEmpDOB(employeeVo.getEmpDOB());
+		employeeBO.setEmpAge(employeeVo.getEmpAge());
+		employeeBO.setEmpGender(employeeVo.getEmpGender());
+		employeeBO.setEmpDesignation(employeeVo.getEmpDesignation());
+		employeeBO.setEmpSalary(employeeVo.getEmpSalary());
+		employeeBO.setEmpEmail(employeeVo.getEmpEmail());
+
+		return employeeDAO.getRecordCount(employeeBO);
+
+	}
 }
