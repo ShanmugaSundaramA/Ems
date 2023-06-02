@@ -32,13 +32,17 @@ public class ViewController {
 	@RequestMapping("/view")
 	public String viewDetails(HttpServletRequest resquest, Model model) {
 		
+		for(int i=1;i<=7;i++) {
+		model.addAttribute("image"+i, "/EMS/resources/images/sort.png");
+		}
+		
 		String order;
-		//orderValue for ascending and descending.
 		int orderValue =resquest.getParameter("orderValue")== null || resquest.getParameter("orderValue")== "" ? 2 : Integer.parseInt(resquest.getParameter("orderValue"));
-		//field for which to sort.
 		String field = resquest.getParameter("field") == null ? "id" : resquest.getParameter("field");
-		//no append in orderValue for value in server page.
 		int no=resquest.getParameter("sortNo") == null ? 1 :Integer.parseInt(resquest.getParameter("sortNo"));
+		int pageNo =  resquest.getParameter("pageNo") == null || resquest.getParameter("pageNo") == "" ? 1 : Integer.parseInt(resquest.getParameter("pageNo")) ;
+		int viewCount = resquest.getParameter("viewCount") == null || resquest.getParameter("viewCount") == "" ? 20 : Integer.parseInt(resquest.getParameter("viewCount")) ;
+		
 		switch (orderValue) {
 		case 1:
 			order="desc";
@@ -49,11 +53,11 @@ public class ViewController {
 			orderValue=orderValue-1;
 			break;
 		}
+		
+		model.addAttribute("image"+no, orderValue == 1 ? "/EMS/resources/images/asc.png" : "/EMS/resources/images/desc.png");
+		model.addAttribute("no",no);
+		model.addAttribute("field",field);
 		model.addAttribute("orderValue"+no,orderValue);
-		
-		int pageNo =  resquest.getParameter("pageNo") == null || resquest.getParameter("pageNo") == "" ? 1 : Integer.parseInt(resquest.getParameter("pageNo")) ;
-		int viewCount = resquest.getParameter("viewCount") == null || resquest.getParameter("viewCount") == "" ? 15 : Integer.parseInt(resquest.getParameter("viewCount")) ;
-		
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("viewCount",viewCount);
 		
@@ -84,16 +88,14 @@ public class ViewController {
 		try {
 			List<EmployeeDTO> empList = employeeService.showDetails(employeeVo, field, order, pageNo, viewCount);
 			employeeDTO= employeeService.getCounts(employeeVo);
-			/*
-			 * if(empList.isEmpty()) { System.out.println("NoData"); }else { 
-			 * }
-			 */
+			
+			 if(empList.isEmpty()) { 
+				 model.addAttribute("NoData","No Data Exist");
+				 }
 			 int existingRecordCount=employeeDTO.getExistingRecordCount();
-			 //System.out.println(existingRecordCount);
 			 int pages=Math.round(existingRecordCount/viewCount);
-			 //System.out.println(pages);
-			 pages=existingRecordCount%viewCount != 0 ? pages+1 : pages ;
-			 //System.out.println(pages);
+			 pages=existingRecordCount%viewCount != 0 || existingRecordCount==0 ? pages+1 : pages ;
+			 
 			 int totalRecord=employeeDTO.getTotalRecordCount();
 			 
 			model.addAttribute("pageCount",pages);

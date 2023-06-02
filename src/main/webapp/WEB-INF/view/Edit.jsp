@@ -39,7 +39,7 @@
 				<tr>
 					<td><span>Employee Gender</span></td>
 					<td><label for="male">Male</label>
-					    <input type="radio" id="male" name="employeeGender" value="male" >
+					    <input type="radio" id="male" name="employeeGender" value="male">
 					    <label for="female">Female</label>
 					    <input type="radio" id="female" name="employeeGender" value="female">
 				    </td>
