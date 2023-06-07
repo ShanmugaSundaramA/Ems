@@ -57,7 +57,6 @@ img {
 			break;
 		case 'Next':
 			pageNo = (pageNo != pageEnd) ? Number(pageNo) + 1 : pageEnd;
-			alert(pageNo+" "+pageEnd );
 			break;
 		default:
 			pageNo;
