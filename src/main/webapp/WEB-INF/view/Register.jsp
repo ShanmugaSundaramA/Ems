@@ -16,11 +16,11 @@
 				</tr>
 				<tr>
 					<td><label for="password"> Password </label></td>
-					<td><input text="text" id="password" name="password"></td>
+					<td><input type="text" id="password" name="password"></td>
 				</tr>
 				<tr>
 					<td><label for="re-password"> Password </label></td>
-					<td><input text="text" id="re-password" name="re-password"></td>
+					<td><input type="text" id="re-password" name="re-password"></td>
 				</tr>
 			</table>
 			<input type="submit" value="Submit">
